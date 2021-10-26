@@ -6,7 +6,6 @@ import com.example.demo.service.AuthorizationService;
 import com.example.demo.utils.Authorities;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -18,8 +17,8 @@ import java.util.List;
 
 @RestController
 public class AuthorizationController {
-    @Autowired
     AuthorizationService service;
+    private static final Logger logger = LoggerFactory.getLogger(AuthorizationController.class);
 
     public AuthorizationController(AuthorizationService service) {
         this.service = service;
@@ -37,7 +36,6 @@ public class AuthorizationController {
 
     @ExceptionHandler(UnauthorizedUser.class)
     public ResponseEntity<String> unauthorizedUserHandler(UnauthorizedUser e) {
-        final Logger logger = LoggerFactory.getLogger(AuthorizationController.class);
         logger.error(e.getMessage());
         return new ResponseEntity<>(e.getMessage(), HttpStatus.UNAUTHORIZED);
     }
